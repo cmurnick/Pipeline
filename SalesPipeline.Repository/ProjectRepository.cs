@@ -6,6 +6,7 @@ namespace SalesPipeline.Repository
 {
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     using Common.Interfaces;
     using Common.Models;
 
@@ -28,7 +29,7 @@ namespace SalesPipeline.Repository
                             p.StartDate,
                             p.EndDate,
                             p.EnrollmentMethodId,
-                            n.ProductName
+                            n.*
                                 
                             FROM Project p
                                 join ProductProject j on j.ProjectId = p.ProjectId
@@ -47,13 +48,26 @@ namespace SalesPipeline.Repository
 
                     using (var dataReader = command.ExecuteReader())
                     {
-                        while (dataReader.Read())
-                        {
-                            projects.Add(this.GetProjects(dataReader));
+                            while (dataReader.Read())
+                            {
+                                var project = GetProjects(dataReader);
+                                var existingProject = projects.FirstOrDefault(x => x.ProjectId == project.ProjectId);
+                                if (existingProject == null)
+                                {
+                                    projects.Add(project);
+                                    existingProject = project;
+                                }
+
+                                existingProject.Product.Add(new Product
+                                {
+                                    ProductId = (int) dataReader["productId"],
+                                    ProductName = (string) dataReader["ProductName"]
+                                });
+
+                            }
                         }
                     }
                 }
-            }
             return projects;
         }
 
