@@ -12,8 +12,7 @@ namespace SalesPipeline.Service
     {
         #region Constructors
 
-        public ProjectService(
-            IProjectRepository projectRepository)
+        public ProjectService(IProjectRepository projectRepository)
         {
             this._projectRepository = projectRepository;
         }

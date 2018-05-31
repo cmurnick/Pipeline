@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SalesPipeline.Common.Interfaces.Repositories
+namespace SalesPipeline.Common.Interfaces.Services
 {
     using Models;
 
-    public interface IEnrollmentSystemRepository
+    public interface IEnrollmentSystemService
     {
         IList<EnrollmentSystem> Get();
     }
