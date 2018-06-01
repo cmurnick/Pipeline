@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SalesPipeline.Common.Interfaces
+namespace SalesPipeline.Common.Interfaces.Repositories
 {
     using Models;
 
