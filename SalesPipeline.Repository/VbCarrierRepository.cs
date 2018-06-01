@@ -6,14 +6,11 @@ namespace SalesPipeline.Repository
 {
     using System.Data;
     using System.Data.SqlClient;
-    using Common.Interfaces;
-    using Common.Models;
+    using Common.Interfaces.Repositories;
+    using SalesPipeline.Common.Models;
 
     public class VbCarrierRepository : IVbCarrierRepository
     {
-        #region Public Methods  
-
-
         public IList<VbCarrier> Get()
         {
             var sql = @"SELECT VbCarrierId, VbCarrierName 
@@ -38,11 +35,8 @@ namespace SalesPipeline.Repository
                 }
             }
 
-
             return vbCarriers;
         }
-
-        #endregion
 
         #region Private Methods
 
@@ -50,13 +44,11 @@ namespace SalesPipeline.Repository
         {
             return new VbCarrier()
             {
-                VbCarrierId = (int)dataReader["ClassificationId"],
-                VbCarrierName = (string)dataReader["ClassificationName"]
+                VbCarrierId = (int)dataReader["VbCarrierId"],
+                VbCarrierName = (string)dataReader["VbCarrierName"]
             };
         }
 
         #endregion
     }
-
-}
 }
