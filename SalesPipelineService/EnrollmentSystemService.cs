@@ -5,10 +5,19 @@ using System.Text;
 namespace SalesPipeline.Service
 {
     using Common.Interfaces.Repositories;
+    using Common.Interfaces.Services;
     using Common.Models;
 
-    public class EnrollmentSystemService
+    public class EnrollmentSystemService : IEnrollmentSystemService
     {
+        #region Constructors
+
+        public EnrollmentSystemService(IEnrollmentSystemRepository enrollmentSystemRepository)
+        {
+            this._enrollmentSystemRepository = enrollmentSystemRepository;
+        }
+
+        #endregion
         #region PrivateProperties
 
         private IEnrollmentSystemRepository _enrollmentSystemRepository { get; }

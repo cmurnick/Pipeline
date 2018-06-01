@@ -16,7 +16,7 @@ namespace SalesPipeline.Common.Interfaces.Services
         /// <param name="enrollmentSystems">A list of all enrollment systems</param>
         /// <param name="salesExecs">A list of all sales execs</param>
         /// <param name="vBCarriers">A list of all vb carriers</param>
-        void ExportSeedData(List<Classification> classifications, List<EnrollmentMethod> enrollmentMethods, List<EnrollmentSystem> enrollmentSystems, List<SalesExec> salesExecs, List<VBCarrier> vBCarriers);
+        void ExportSeedData(List<Classification> classifications, List<EnrollmentMethod> enrollmentMethods, List<EnrollmentSystem> enrollmentSystems, List<SalesExec> salesExecs, List<VbCarrier> vBCarriers);
     }
 }
 

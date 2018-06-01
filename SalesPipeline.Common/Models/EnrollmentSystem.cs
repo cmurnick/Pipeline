@@ -6,13 +6,7 @@ namespace SalesPipeline.Common.Models
 {
     public class EnrollmentSystem
     {
-        #region Constructors
-
-        public EnrollmentSystem()
-        { }
-
-        #endregion
-
+       
         #region Public Properties
 
         public int EnrollmentSystemId { get; set; }

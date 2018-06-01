@@ -14,7 +14,7 @@ namespace SalesPipeline.Common.Models
             this.Classifications = new List<Classification>();
             this.EnrollmentMethods = new List<EnrollmentMethod>();
             this.EnrollmentSystems = new List<EnrollmentSystem>();
-            this.VBCarriers = new List<VBCarrier>();
+            this.VBCarriers = new List<VbCarrier>();
         }
 
         #endregion
@@ -25,7 +25,7 @@ namespace SalesPipeline.Common.Models
         public List<Classification> Classifications { get; set; }
         public List<EnrollmentMethod> EnrollmentMethods { get; set; }
         public List<EnrollmentSystem> EnrollmentSystems { get; set; }
-        public List<VBCarrier> VBCarriers { get; set; }
+        public List<VbCarrier> VBCarriers { get; set; }
         #endregion
 
       

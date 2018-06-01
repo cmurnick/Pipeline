@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SalesPipeline.Common.Interfaces.Repositories
+namespace SalesPipeline.Common.Interfaces
 {
     using Models;
 
-    public interface IVBCarrierRepository
+    public interface IVbCarrierRepository
     {
-        IList<VBCarrier> Get();
+        IList<VbCarrier> Get();
     }
 }

@@ -5,10 +5,20 @@ using System.Text;
 namespace SalesPipeline.Service
 {
     using Common.Interfaces.Repositories;
+    using Common.Interfaces.Services;
     using Common.Models;
 
-    public class ClassificationService
+    public class ClassificationService : IClassificationService
     {
+        #region Constructors
+
+        public ClassificationService(IClassificationRepository classificationRepository)
+        {
+            this._classificationRepository = classificationRepository;
+        }
+
+        #endregion
+
         #region PrivateProperties
 
         private IClassificationRepository _classificationRepository { get; }

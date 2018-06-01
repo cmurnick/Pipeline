@@ -6,8 +6,8 @@ namespace SalesPipeline.Common.Interfaces.Services
 {
     using Models;
 
-    public interface IVBCarrierService
+    public interface IVbCarrierService
     {
-        IList<VBCarrier> Get();
+        IList<VbCarrier> Get();
     }
 }

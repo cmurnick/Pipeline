@@ -8,27 +8,26 @@ namespace SalesPipeline.Service
     using Common.Interfaces.Services;
     using Common.Models;
 
-    public class ProductService : IProductService
+    public class SalesExecService : ISalesExecService
     {
         #region Constructors
 
-        public ProductService(IProductRepository productRepository)
+        public SalesExecService(ISalesExecRepository salesExecRepository)
         {
-            this._productRepository = productRepository;
+            this._salesExecRepository = salesExecRepository;
         }
 
         #endregion
-
         #region PrivateProperties
 
-        private IProductRepository _productRepository { get; }
+        private ISalesExecRepository _salesExecRepository { get; }
 
         #endregion
 
         #region Public Methods
-        public IList<Product> Get()
+        public IList<SalesExec> Get()
         {
-            return this._productRepository.Get();
+            return this._salesExecRepository.Get();
         }
 
         #endregion
