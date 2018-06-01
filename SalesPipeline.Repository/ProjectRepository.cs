@@ -14,7 +14,7 @@ namespace SalesPipeline.Repository
     {
         #region Public Methods  
 
-        public IList<Project> GetProjectsWithProductsForOneExec(int SalesExecId)
+        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
         {
             var sql = @"Select  
                             p.ProjectId, 
@@ -34,7 +34,7 @@ namespace SalesPipeline.Repository
                             FROM Project p
                                 join ProductProject j on j.ProjectId = p.ProjectId
                                 join Product n on n.ProductId = j.ProductId
-                            WHERE p.SalesExecId = 2 
+                            WHERE p.SalesExecId = @SalesExecId 
                             ORDER By p.ClassificationId";
 
             var projects = new List<Project>();
@@ -44,6 +44,7 @@ namespace SalesPipeline.Repository
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@SalesExecId", salesExecId);
                     connection.Open();
 
                     using (var dataReader = command.ExecuteReader())
@@ -71,6 +72,9 @@ namespace SalesPipeline.Repository
             return projects;
         }
 
+        //public IList<Project> GetAllExecProjectsWithProducts()
+        //{ }
+
         #endregion
 
         #region Private Methods
@@ -97,21 +101,18 @@ namespace SalesPipeline.Repository
             };
         }
 
-        ///// <summary>
-        ///// Converts a Customer into SQL Parameters 
-        ///// </summary>
-        ///// <param name="command">An instance of <see cref="SqlCommand"/></param>
-        ///// <param name="customer">An instance of <see cref="Customer"/></param>
-        ///// <returns>An instance of <see cref="SqlCommand"/> with parameters added</returns>
-        //private SqlCommand GetParameters(SqlCommand command, Customer customer)
-        //{
-        //    command.Parameters.AddWithValue("@CustomerCD", customer.CustomerCD);
-        //    command.Parameters.AddWithValue("@FileCount", customer.FileCount);
-        //    command.Parameters.AddWithValue("@CustomerName", customer.CustomerName);
-        //    command.Parameters.AddWithValue("@CustomerGUID", customer.CustomerGuid);
-
-        //    return command;
-        //}
+        /// <summary>
+        /// Converts a Customer into SQL Parameters 
+        /// </summary>
+        /// <param name="command">An instance of <see cref="SqlCommand"/></param>
+        /// <param name="customer">An instance of <see cref="Customer"/></param>
+        /// <returns>An instance of <see cref="SqlCommand"/> with parameters added</returns>
+        private SqlCommand GetParameters(SqlCommand command, Project project)
+        {
+            command.Parameters.AddWithValue("@SalesExecId", project.SalesExecId);
+            
+            return command;
+        }
 
 
         #endregion
