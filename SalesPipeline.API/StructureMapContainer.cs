@@ -21,7 +21,6 @@ namespace SalesPipeline.API
                 c.Assembly("SalesPipeline.Common");
                 c.Assembly("SalesPipeline.Repository");
                 c.Assembly("SalesPipeline.Service");
-
                 c.WithDefaultConventions();
                 c.LookForRegistries();
             }));

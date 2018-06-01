@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SalesPipeline.Common.Interfaces
+namespace SalesPipeline.Common.Interfaces.Services
 {
     using Models;
 
-    public interface IVbCarrierRepository
+    public interface IVbCarrierService
     {
         IList<VbCarrier> Get();
     }

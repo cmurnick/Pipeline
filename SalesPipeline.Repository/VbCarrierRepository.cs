@@ -6,31 +6,20 @@ namespace SalesPipeline.Repository
 {
     using System.Data;
     using System.Data.SqlClient;
-    using Common.Interfaces.Repositories;
+    using Common.Interfaces;
     using Common.Models;
 
-    public class EnrollmentSystemRepository : IEnrollmentSystemRepository
+    public class VbCarrierRepository : IVbCarrierRepository
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnrollmentSystemRepository"/> class
-        /// </summary>
-        public EnrollmentSystemRepository()
-        {
-        }
-
-        #endregion
-
         #region Public Methods  
 
 
-        public IList<EnrollmentSystem> Get()
+        public IList<VbCarrier> Get()
         {
-            var sql = @"SELECT EnrollmentSystemId, SystemName 
-                        FROM EnrollmentSystem";
+            var sql = @"SELECT VbCarrierId, VbCarrierName 
+                        FROM VbCarrier";
 
-            var enrollmentSystems = new List<EnrollmentSystem>();
+            var vbCarriers = new List<VbCarrier>();
 
             using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
             {
@@ -43,29 +32,31 @@ namespace SalesPipeline.Repository
                     {
                         while (dataReader.Read())
                         {
-                            enrollmentSystems.Add(this.GetEnrollmentSystems(dataReader));
+                            vbCarriers.Add(this.GetVbCarriers(dataReader));
                         }
                     }
                 }
             }
 
-            return enrollmentSystems;
+
+            return vbCarriers;
         }
 
         #endregion
 
         #region Private Methods
 
-        private EnrollmentSystem GetEnrollmentSystems(SqlDataReader dataReader)
+        private VbCarrier GetVbCarriers(SqlDataReader dataReader)
         {
-            return new EnrollmentSystem()
+            return new VbCarrier()
             {
-                EnrollmentSystemId = (int)dataReader["EnrollmentSystemId"],
-                SystemName = (string)dataReader["SystemName"]
+                VbCarrierId = (int)dataReader["ClassificationId"],
+                VbCarrierName = (string)dataReader["ClassificationName"]
             };
         }
 
         #endregion
     }
-}
 
+}
+}

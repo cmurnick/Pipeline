@@ -4,18 +4,12 @@ using System.Text;
 
 namespace SalesPipeline.Common.Models
 {
-   public class VBCarrier
+    public class VbCarrier
     {
-        #region Constructors
-
-        public VBCarrier() { }
-
-        #endregion
-
         #region Public Properties
 
-        public int VBCarrierId { get; set; }
-        public string VBCarrierName { get; set; }
+        public int VbCarrierId { get; set; }
+        public string VbCarrierName { get; set; }
 
         #endregion
     }

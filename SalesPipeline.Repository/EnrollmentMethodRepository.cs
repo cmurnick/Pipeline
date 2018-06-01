@@ -6,9 +6,10 @@ namespace SalesPipeline.Repository
 {
     using System.Data;
     using System.Data.SqlClient;
+    using Common.Interfaces.Repositories;
     using Common.Models;
 
-    public class EnrollmentMethodRepository
+    public class EnrollmentMethodRepository : IEnrollmentMethodRepository
     {
         #region Constructors
 
@@ -31,7 +32,7 @@ namespace SalesPipeline.Repository
 
             var enrollmentMethods = new List<EnrollmentMethod>();
 
-            using (var connection = new SqlConnection("Server=(local);Database=Capstone;Trusted_Connection=True;"))
+            using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -47,8 +48,7 @@ namespace SalesPipeline.Repository
                     }
                 }
             }
-
-            ;
+            
             return enrollmentMethods;
         }
 
