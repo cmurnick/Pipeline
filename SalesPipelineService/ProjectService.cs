@@ -31,6 +31,11 @@ namespace SalesPipeline.Service
             return this._projectRepository.GetProjectsWithProductsForOneExec(salesExecId);
         }
 
+        public IList<Project> GetAllExecProjectsWithProducts()
+        {
+            return this._projectRepository.GetAllExecProjectsWithProducts();
+        }
+
         #endregion
 
     }

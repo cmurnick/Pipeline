@@ -29,6 +29,22 @@ namespace SalesPipeline.API.Modules
                         return this.Negotiate.WithStatusCode(Nancy.HttpStatusCode.InternalServerError);
                     }
                 });
+
+            this.Get(
+                "/leadershipreport",
+                parameters =>
+                {
+                    try
+                    {
+                        var projects = this._projectService.GetAllExecProjectsWithProducts();
+                        return this.GetJsonResponse(projects);
+
+                    }
+                    catch (Exception e)
+                    {
+                        return this.Negotiate.WithStatusCode(Nancy.HttpStatusCode.InternalServerError);
+                    }
+                });
         }
 
 

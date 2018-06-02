@@ -9,7 +9,7 @@ namespace SalesPipeline.Common.Interfaces
  
     public interface IProjectRepository
     {
-        //IList<Project> GetAllExecProjectsWithProducts();
+        IList<Project> GetAllExecProjectsWithProducts();
 
         //Project Insert(Project project);
 

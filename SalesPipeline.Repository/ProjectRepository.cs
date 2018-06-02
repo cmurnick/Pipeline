@@ -14,6 +14,8 @@ namespace SalesPipeline.Repository
     {
         #region Public Methods  
 
+      
+
         public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
         {
             var sql = @"Select  
@@ -72,8 +74,61 @@ namespace SalesPipeline.Repository
             return projects;
         }
 
-        //public IList<Project> GetAllExecProjectsWithProducts()
-        //{ }
+        public IList<Project> GetAllExecProjectsWithProducts()
+        {
+            var sql = @"Select  
+                            p.ProjectId, 
+                            p.CompanyName,
+                            p.NumberEligible,
+                            p.NumberInterview,
+                            p.ClassificationId,
+                            p.SalesExecId,
+                            p.New,
+                            p.EnrollmentSystemId,
+                            p.VbCarrierId,
+                            p.StartDate,
+                            p.EndDate,
+                            p.EnrollmentMethodId,
+                            n.*
+                                
+                            FROM Project p
+                                join ProductProject j on j.ProjectId = p.ProjectId
+                                join Product n on n.ProductId = j.ProductId
+                            WHERE p.ClassificationId = 1 or p.ClassificationId = 2 or p.ClassificationId = 3
+                            ORDER By p.ClassificationId";
+
+            var projects = new List<Project>();
+            using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
+            {
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            var project = GetProjects(dataReader);
+                            var existingProject = projects.FirstOrDefault(x => x.ProjectId == project.ProjectId);
+                            if (existingProject == null)
+                            {
+                                projects.Add(project);
+                                existingProject = project;
+                            }
+
+                            existingProject.Product.Add(new Product
+                            {
+                                ProductId = (int)dataReader["productId"],
+                                ProductName = (string)dataReader["ProductName"]
+                            });
+
+                        }
+                    }
+                }
+            }
+            return projects;
+        }
 
         #endregion
 
