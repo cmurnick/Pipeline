@@ -7,6 +7,7 @@ namespace SalesPipeline.Service
 {
     using SalesPipeline.Common.Interfaces;
     using SalesPipeline.Common.Models;
+  
 
     public class ProjectService : IProjectService
     {
@@ -31,6 +32,22 @@ namespace SalesPipeline.Service
             return this._projectRepository.GetProjectsWithProductsForOneExec(salesExecId);
         }
 
+        public IList<Project> GetAllExecProjectsWithProducts()
+        {
+            return this._projectRepository.GetAllExecProjectsWithProducts();
+        }
+
+        public Project Save(Project project)
+        {
+            if (project.ProjectId == 0)
+            {
+                return this._projectRepository.Insert(project);
+            }
+            else
+            {
+                return this._projectRepository.Update(project);
+            }
+        }
         #endregion
 
     }

@@ -25,7 +25,7 @@ namespace SalesPipeline.Common.Models
         public bool New { get; set; }
         public int SalesExecId { get; set; }
         public int EnrollmentSystemId { get; set; }
-        public int VBCarrierId { get; set; }
+        public int VbCarrierId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int EnrollmentMethodId { get; set; }

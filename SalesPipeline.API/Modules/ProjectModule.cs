@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace SalesPipeline.API.Modules
 {
+    using Common.Models;
     using Nancy;
+    using Nancy.ModelBinding;
+    using System.Linq;
+    using System;
+    using Newtonsoft.Json.Serialization;
 
     public class ProjectModule : BaseModule
     {
@@ -15,13 +20,13 @@ namespace SalesPipeline.API.Modules
         {
             this._projectService = projectService;
             this.Get(
-                "/",
+                "/{salesexecid}",
                 parameters =>
                 {
                     try
                     {
-                        //var salesExecId = parameters.salesExecId;
-                        var projects = this._projectService.GetProjectsWithProductsForOneExec(2);
+                        var salesExecId = parameters.salesexecid;
+                        var projects = this._projectService.GetProjectsWithProductsForOneExec(salesExecId);
                         return this.GetJsonResponse(projects);
                     }
                     catch (System.Exception e)
@@ -29,6 +34,46 @@ namespace SalesPipeline.API.Modules
                         return this.Negotiate.WithStatusCode(Nancy.HttpStatusCode.InternalServerError);
                     }
                 });
+
+            this.Get(
+                "/leadershipreport",
+                parameters =>
+                {
+                    try
+                    {
+                        var projects = this._projectService.GetAllExecProjectsWithProducts();
+                        return this.GetJsonResponse(projects);
+
+                    }
+                    catch (Exception e)
+                    {
+                        return this.Negotiate.WithStatusCode(Nancy.HttpStatusCode.InternalServerError);
+                    }
+                });
+
+            this.Post(
+                "/",
+                parameters =>
+                {
+                    try
+                    {
+                        var project = this.Bind<Project>();
+
+                        var serviceReturn = new ServiceReturn<Project>();
+
+                        serviceReturn.Data = this._projectService.Save(project);
+
+                        serviceReturn.Success = true;
+
+                        return this.GetJsonResponse(serviceReturn);
+                    }
+                    catch (Exception e)
+                    {
+                        return this.Negotiate.WithStatusCode(HttpStatusCode.InternalServerError);
+                    }
+                });
+
+
         }
 
 
