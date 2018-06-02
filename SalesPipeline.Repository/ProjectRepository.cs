@@ -132,12 +132,13 @@ namespace SalesPipeline.Repository
 
         public Project Insert(Project project)
         {
-            var sql = "@ INSERT INTO Project (ProjectId, CompanyName, NumberEligible, " +
+            var sql = "INSERT INTO Project (CompanyName, NumberEligible, " +
                       "NumberInterview, ClassificationId, SalesExecId, " +
                       "New, EnrollmentSystemId, VbCarrierId, StartDate, EndDate, EnrollmentMethodId)" +
-                       "VALUES (@ProjectId, @CompanyName, @NumberEligible, " +
+                       "VALUES (@CompanyName, @NumberEligible, " +
                       "@NumberInterview, @ClassificationId, @SalesExecId, " +
-                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)";
+                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)" +
+                      "Set @ProjectId = SCOPE_IDENTITY()";
 
             using (var connection =
                 new SqlConnection(
@@ -155,7 +156,7 @@ namespace SalesPipeline.Repository
 
                     command.ExecuteNonQuery();
 
-                    project.ProjectId = (int) command.Parameters["@ProjectId"].Value;
+                    project.ProjectId = (int)command.Parameters["@ProjectId"].Value;
                 }
             }
 

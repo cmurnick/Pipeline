@@ -67,7 +67,7 @@ namespace SalesPipeline.API.Modules
 
                         return this.GetJsonResponse(serviceReturn);
                     }
-                    catch
+                    catch (Exception e)
                     {
                         return this.Negotiate.WithStatusCode(HttpStatusCode.InternalServerError);
                     }
