@@ -11,5 +11,8 @@ namespace SalesPipeline.Common.Interfaces.Services
         IList<Project> GetProjectsWithProductsForOneExec(int SalesExecId);
 
         IList<Project> GetAllExecProjectsWithProducts();
-    }
+
+        Project Save(Project project);
+
+      }
 }

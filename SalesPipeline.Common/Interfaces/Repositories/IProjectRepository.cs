@@ -11,9 +11,9 @@ namespace SalesPipeline.Common.Interfaces
     {
         IList<Project> GetAllExecProjectsWithProducts();
 
-        //Project Insert(Project project);
+        Project Insert(Project project);
 
-        //Project Update(Project project);
+        Project Update(Project project);
 
         IList<Project> GetProjectsWithProductsForOneExec(int SalesExecId);
     }

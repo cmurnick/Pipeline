@@ -130,6 +130,76 @@ namespace SalesPipeline.Repository
             return projects;
         }
 
+        public Project Insert(Project project)
+        {
+            var sql = "@ INSERT INTO Project (ProjectId, CompanyName, NumberEligible, " +
+                      "NumberInterview, ClassificationId, SalesExecId, " +
+                      "New, EnrollmentSystemId, VbCarrierId, StartDate, EndDate, EnrollmentMethodId)" +
+                       "VALUES (@ProjectId, @CompanyName, @NumberEligible, " +
+                      "@NumberInterview, @ClassificationId, @SalesExecId, " +
+                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)";
+
+            using (var connection =
+                new SqlConnection(
+                    "Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77")
+            )
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+
+                    this.GetParameters(command, project);
+                    command.Parameters["@ProjectId"].Direction = ParameterDirection.InputOutput;
+
+                    connection.Open();
+
+                    command.ExecuteNonQuery();
+
+                    project.ProjectId = (int) command.Parameters["@ProjectId"].Value;
+                }
+            }
+
+            return project;
+        }
+
+        public Project Update(Project project)
+        {
+            var sql = "@ UPDATE Project SET" +
+                      "ProjectId = @ProjectId" +
+                      "CompanyName = @CompanyName" +
+                      "NumberEligible = @NumberEligible" +
+                      "NumberInterview = @NumberInterview" +
+                      "ClassificationId = @ClassificationId" +
+                      "SalesExecId = @SalesExecId" +
+                      "New = @New" +
+                      "EnrollmentSystemId = @EnrollmentSystemId" +
+                      "VbCarrierId = @VbCarrierId" +
+                      "StartDate = @StartDate" +
+                      "EndDate = @EndDate" +
+                      "EnrollmentMethodId = @EnrollmentMethodId" +
+                      "WHERE ProjectId = @ProjectId";
+
+            using (var connection =
+                new SqlConnection(
+                    "Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77")
+            )
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+
+                    this.GetParameters(command, project);
+
+                    connection.Open();
+
+                    command.ExecuteNonQuery();
+
+                }
+            }
+
+            return project;
+        }
+
         #endregion
 
         #region Private Methods
@@ -147,7 +217,7 @@ namespace SalesPipeline.Repository
                 SalesExecId = (int)dataReader["SalesExecId"],
                 New = (bool)dataReader["New"],
                 EnrollmentSystemId = (int)dataReader["EnrollmentSystemId"],
-                VBCarrierId = (int)dataReader["VbCarrierId"],
+                VbCarrierId = (int)dataReader["VbCarrierId"],
                 StartDate = (DateTime)dataReader["StartDate"],
                 EndDate = (DateTime)dataReader["EndDate"],
                 EnrollmentMethodId = (int)dataReader["EnrollmentMethodId"],
@@ -164,6 +234,17 @@ namespace SalesPipeline.Repository
         /// <returns>An instance of <see cref="SqlCommand"/> with parameters added</returns>
         private SqlCommand GetParameters(SqlCommand command, Project project)
         {
+            command.Parameters.AddWithValue("@ProjectId", project.ProjectId);
+            command.Parameters.AddWithValue("@CompanyName", project.CompanyName);
+            command.Parameters.AddWithValue("@NumberEligible", project.NumberEligible);
+            command.Parameters.AddWithValue("@NumberInterview", project.NumberInterview);
+            command.Parameters.AddWithValue("@ClassificationId", project.ClassificationId);
+            command.Parameters.AddWithValue("@New", project.New);
+            command.Parameters.AddWithValue("@EnrollmentSystemId", project.EnrollmentSystemId);
+            command.Parameters.AddWithValue("@VbCarrierId", project.VbCarrierId);
+            command.Parameters.AddWithValue("@StartDate", project.StartDate);
+            command.Parameters.AddWithValue("@EndDate", project.EndDate);
+            command.Parameters.AddWithValue("@EnrollmentMethodId", project.EnrollmentMethodId);
             command.Parameters.AddWithValue("@SalesExecId", project.SalesExecId);
             
             return command;
