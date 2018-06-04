@@ -8,6 +8,8 @@ namespace SalesPipeline.Common.Interfaces.Services
 
     public interface IProductProjectService
     {
-        IList<ProductProject> GetProductProject(int projectId);
+        ProductProject Save(ProductProject ProductProject);
+
+        bool Delete(int projectId);
     }
 }

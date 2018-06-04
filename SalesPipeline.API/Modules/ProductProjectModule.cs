@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 namespace SalesPipeline.API.Modules
 {
     using Common.Interfaces.Services;
+    using Common.Models;
     using Nancy;
+    using Nancy.ModelBinding;
 
     public class ProductProjectModule : BaseModule
     {
@@ -14,16 +16,38 @@ namespace SalesPipeline.API.Modules
         {
             this._productProjectService = productProjectService;
 
-            this.Get(
+            this.Post(
+                "/",
+                parameters =>
+                {
+                    try
+                    {
+                        var productProject = this.Bind<ProductProject>();
+
+                        var serviceReturn = new ServiceReturn<ProductProject>();
+
+                        serviceReturn.Success = true;
+
+                        return this.GetJsonResponse(serviceReturn);
+                    }
+                    catch (Exception e)
+                    {
+                        return this.Negotiate.WithStatusCode(HttpStatusCode.InternalServerError);
+                    }
+                });
+
+            this.Delete(
                 "/{projectid}",
                 parameters =>
                 {
                     try
                     {
-                        var projectId = parameters.projectid;
-                        var products = this._productProjectService.GetProductProject(projectId).ToList();
+                        int projectId = parameters.projectId;
+                        var serviceReturn = new ServiceReturn<ProductProject>();
+                        serviceReturn.Success = this._productProjectService.Delete(projectId);
+                        serviceReturn.ItemId = projectId;
 
-                        return this.GetJsonResponse(products);
+                        return this.GetJsonResponse(serviceReturn);
 
                     }
                     catch (Exception e)
