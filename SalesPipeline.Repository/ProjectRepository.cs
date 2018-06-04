@@ -23,17 +23,22 @@ namespace SalesPipeline.Repository
                             p.CompanyName,
                             p.NumberEligible,
                             p.NumberInterview,
-                            p.ClassificationId,
-                            p.SalesExecId,
+                            c.ClassificationName,
+                            s.FirstName,
                             p.New,
-                            p.EnrollmentSystemId,
-                            p.VbCarrierId,
+                            es.SystemName,
+                            v.VbCarrierName,
                             p.StartDate,
                             p.EndDate,
-                            p.EnrollmentMethodId,
+                            em.EnrollmentMethodType,
                             n.*
                                 
                             FROM Project p
+								join Classification c on c.ClassificationId = p. ClassificationId
+								join SalesExec s on s.SalesExecId = p.SalesExecId
+								join EnrollmentSystem es on es.EnrollmentSystemId = p.EnrollmentSystemId
+								join EnrollmentMethod em on em.EnrollmentMethodId = p.EnrollmentMethodId
+								join VbCarrier v on v.VbCarrierId = p.VbCarrierId
                                 join ProductProject j on j.ProjectId = p.ProjectId
                                 join Product n on n.ProductId = j.ProductId
                             WHERE p.SalesExecId = @SalesExecId 
@@ -81,21 +86,26 @@ namespace SalesPipeline.Repository
                             p.CompanyName,
                             p.NumberEligible,
                             p.NumberInterview,
-                            p.ClassificationId,
-                            p.SalesExecId,
+                            c.ClassificationName,
+                            s.FirstName,
                             p.New,
-                            p.EnrollmentSystemId,
-                            p.VbCarrierId,
+                            es.SystemName,
+                            v.VbCarrierName,
                             p.StartDate,
                             p.EndDate,
-                            p.EnrollmentMethodId,
+                            em.EnrollmentMethodType,
                             n.*
                                 
                             FROM Project p
+								join Classification c on c.ClassificationId = p. ClassificationId
+								join SalesExec s on s.SalesExecId = p.SalesExecId
+								join EnrollmentSystem es on es.EnrollmentSystemId = p.EnrollmentSystemId
+								join EnrollmentMethod em on em.EnrollmentMethodId = p.EnrollmentMethodId
+								join VbCarrier v on v.VbCarrierId = p.VbCarrierId
                                 join ProductProject j on j.ProjectId = p.ProjectId
                                 join Product n on n.ProductId = j.ProductId
                             WHERE p.ClassificationId = 1 or p.ClassificationId = 2 or p.ClassificationId = 3
-                            ORDER By p.ClassificationId";
+                            ORDER By p.New, p.ClassificationId";
 
             var projects = new List<Project>();
             using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
