@@ -92,15 +92,21 @@ namespace SalesPipeline.Repository
                             p.CompanyName,
                             p.NumberEligible,
                             p.NumberInterview,
-                            c.ClassificationName,
-                            s.FirstName,
+                            p.ClassificationId,
+                            p.SalesExecId,
+                            p.EnrollmentSystemId,
+                            p.VbCarrierId,
+                            p.EnrollmentMethodId,                       
                             p.New,
-                            es.SystemName,
-                            v.VbCarrierName,
                             p.StartDate,
                             p.EndDate,
+                            s.FirstName,
+                            c.ClassificationName,
+                            es.SystemName,
+                            v.VbCarrierName,
                             em.EnrollmentMethodType,
-                            n.*
+                            n.ProductId,
+                            n.ProductName
                                 
                             FROM Project p
 								join Classification c on c.ClassificationId = p. ClassificationId
