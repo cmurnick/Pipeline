@@ -16,22 +16,28 @@ namespace SalesPipeline.Repository
 
       
 
-        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
+        public IList<Project> GetProjectsWithProductsForOneExec()
         {
             var sql = @"Select  
                             p.ProjectId, 
                             p.CompanyName,
                             p.NumberEligible,
                             p.NumberInterview,
-                            c.ClassificationName,
-                            s.FirstName,
+                            p.ClassificationId,
+                            p.SalesExecId,
+                            p.EnrollmentSystemId,
+                            p.VbCarrierId,
+                            p.EnrollmentMethodId,                       
                             p.New,
-                            es.SystemName,
-                            v.VbCarrierName,
                             p.StartDate,
                             p.EndDate,
+                            s.FirstName,
+                            c.ClassificationName,
+                            es.SystemName,
+                            v.VbCarrierName,
                             em.EnrollmentMethodType,
-                            n.*
+                            n.ProductId,
+                            n.ProductName
                                 
                             FROM Project p
 								join Classification c on c.ClassificationId = p. ClassificationId
@@ -41,7 +47,7 @@ namespace SalesPipeline.Repository
 								join VbCarrier v on v.VbCarrierId = p.VbCarrierId
                                 join ProductProject j on j.ProjectId = p.ProjectId
                                 join Product n on n.ProductId = j.ProductId
-                            WHERE p.SalesExecId = @SalesExecId 
+                            
                             ORDER By p.ClassificationId";
 
             var projects = new List<Project>();
@@ -51,7 +57,7 @@ namespace SalesPipeline.Repository
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
-                    command.Parameters.AddWithValue("@SalesExecId", salesExecId);
+                    
                     connection.Open();
 
                     using (var dataReader = command.ExecuteReader())
@@ -225,13 +231,18 @@ namespace SalesPipeline.Repository
                 NumberEligible = (int)dataReader["NumberEligible"],
                 NumberInterview = (int)dataReader["NumberInterview"],
                 ClassificationId = (int)dataReader["ClassificationId"],
+                ClassificationName = (string)dataReader["ClassificationName"],
                 SalesExecId = (int)dataReader["SalesExecId"],
+                FirstName = (string)dataReader["FirstName"],
                 New = (bool)dataReader["New"],
+                SystemName = (string)dataReader["SystemName"],
                 EnrollmentSystemId = (int)dataReader["EnrollmentSystemId"],
+                VbCarrierName = (string)dataReader["VbCarrierName"],
                 VbCarrierId = (int)dataReader["VbCarrierId"],
                 StartDate = (DateTime)dataReader["StartDate"],
                 EndDate = (DateTime)dataReader["EndDate"],
-                EnrollmentMethodId = (int)dataReader["EnrollmentMethodId"],
+                EnrollmentMethodType = (string)dataReader["EnrollmentMethodType"],
+                EnrollmentMethodId = (int)dataReader["EnrollmentMethodId"]
 
 
             };
@@ -249,14 +260,18 @@ namespace SalesPipeline.Repository
             command.Parameters.AddWithValue("@CompanyName", project.CompanyName);
             command.Parameters.AddWithValue("@NumberEligible", project.NumberEligible);
             command.Parameters.AddWithValue("@NumberInterview", project.NumberInterview);
+            command.Parameters.AddWithValue("@ClassificationName", project.ClassificationName);
             command.Parameters.AddWithValue("@ClassificationId", project.ClassificationId);
             command.Parameters.AddWithValue("@New", project.New);
+            command.Parameters.AddWithValue("@SystemName", project.SystemName);
             command.Parameters.AddWithValue("@EnrollmentSystemId", project.EnrollmentSystemId);
+            command.Parameters.AddWithValue("@VbCarrierName", project.VbCarrierName);
             command.Parameters.AddWithValue("@VbCarrierId", project.VbCarrierId);
             command.Parameters.AddWithValue("@StartDate", project.StartDate);
             command.Parameters.AddWithValue("@EndDate", project.EndDate);
+            command.Parameters.AddWithValue("@EnrollmentMethodType", project.EnrollmentMethodType);
             command.Parameters.AddWithValue("@EnrollmentMethodId", project.EnrollmentMethodId);
-            command.Parameters.AddWithValue("@SalesExecId", project.SalesExecId);
+            command.Parameters.AddWithValue("@FirstName", project.FirstName);
             
             return command;
         }

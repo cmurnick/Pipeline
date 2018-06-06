@@ -20,13 +20,13 @@ namespace SalesPipeline.API.Modules
         {
             this._projectService = projectService;
             this.Get(
-                "/{salesexecid}",
+                "/",
                 parameters =>
                 {
                     try
                     {
-                        var salesExecId = parameters.salesexecid;
-                        var projects = this._projectService.GetProjectsWithProductsForOneExec(salesExecId);
+                        
+                        var projects = this._projectService.GetProjectsWithProductsForOneExec();
                         return this.GetJsonResponse(projects);
                     }
                     catch (System.Exception e)

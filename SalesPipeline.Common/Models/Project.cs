@@ -21,13 +21,18 @@ namespace SalesPipeline.Common.Models
         public string CompanyName { get; set; }
         public int NumberEligible { get; set; }
         public int NumberInterview { get; set; }
+        public string ClassificationName { get; set; }
         public int ClassificationId { get; set; }
         public bool New { get; set; }
+        public string FirstName { get; set; }
         public int SalesExecId { get; set; }
+        public string SystemName { get; set; }
         public int EnrollmentSystemId { get; set; }
+        public string VbCarrierName { get; set; }
         public int VbCarrierId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string EnrollmentMethodType { get; set; }
         public int EnrollmentMethodId { get; set; }
 
 
