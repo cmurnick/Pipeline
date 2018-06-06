@@ -27,9 +27,9 @@ namespace SalesPipeline.Service
 
         #region Public  Methods
 
-        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
+        public IList<Project> GetProjectsWithProductsForOneExec()
         {
-            return this._projectRepository.GetProjectsWithProductsForOneExec(salesExecId);
+            return this._projectRepository.GetProjectsWithProductsForOneExec();
         }
 
         public IList<Project> GetAllExecProjectsWithProducts()

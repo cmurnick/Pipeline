@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interfaces\Repositories\IProductProjectRepository.cs" />
     <Compile Remove="Interfaces\Services\IAllSeedDataService.cs" />
     <Compile Remove="Models\AllSeedDataModel.cs" />
-    <Compile Remove="Models\ProductProject.cs" />
   </ItemGroup>
 
   <ItemGroup>

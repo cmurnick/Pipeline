@@ -37,6 +37,7 @@ namespace SalesPipeline.API
             }
 
             app.UseOwin(x => x.UseNancy());
+
         }
     }
 

@@ -8,6 +8,8 @@ namespace SalesPipeline.Common.Interfaces.Repositories
 
     public interface IProductProjectRepository
     {
-        IList<ProductProject> GetForProject(int ProjectId);
+        ProductProject Insert(ProductProject ProductProject);
+
+        bool Delete(int projectId);
     }
 }

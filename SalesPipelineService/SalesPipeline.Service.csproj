@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Compile Remove="AllSeedDataService.cs" />
-    <Compile Remove="ProductProjectService.cs" />
   </ItemGroup>
 
   <ItemGroup>
