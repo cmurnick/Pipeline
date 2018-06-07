@@ -16,17 +16,18 @@ namespace SalesPipeline.API.Modules
     public class ProjectModule : BaseModule
     {
 
-        public ProjectModule(IProjectService projectService) : base("/projects")
+        public ProjectModule(IProjectService projectService) : base("salesexec/")
         {
             this._projectService = projectService;
             this.Get(
-                "/",
+                "/{salesexecid}/projects",
                 parameters =>
                 {
                     try
                     {
-                        
-                        var projects = this._projectService.GetProjectsWithProductsForOneExec();
+                        var salesExecId = parameters.salesexecid;
+
+                        var projects = this._projectService.GetProjectsWithProductsForOneExec(salesExecId);
                         return this.GetJsonResponse(projects);
                     }
                     catch (System.Exception e)
@@ -36,7 +37,7 @@ namespace SalesPipeline.API.Modules
                 });
 
             this.Get(
-                "/leadershipreport",
+                "/",
                 parameters =>
                 {
                     try

@@ -16,7 +16,7 @@ namespace SalesPipeline.Repository
 
       
 
-        public IList<Project> GetProjectsWithProductsForOneExec()
+        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
         {
             var sql = @"Select  
                             p.ProjectId, 
@@ -47,7 +47,9 @@ namespace SalesPipeline.Repository
 								join VbCarrier v on v.VbCarrierId = p.VbCarrierId
                                 join ProductProject j on j.ProjectId = p.ProjectId
                                 join Product n on n.ProductId = j.ProductId
-                            
+
+                            WHERE p.SalesExecId = @SalesExecId
+
                             ORDER By p.ClassificationId";
 
             var projects = new List<Project>();
@@ -57,7 +59,9 @@ namespace SalesPipeline.Repository
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
-                    
+
+                    command.Parameters.AddWithValue("@SalesExecId", salesExecId);
+
                     connection.Open();
 
                     using (var dataReader = command.ExecuteReader())
@@ -211,6 +215,7 @@ namespace SalesPipeline.Repository
                 {
                     command.CommandType = CommandType.Text;
 
+
                     this.GetParameters(command, project);
 
                     connection.Open();
@@ -278,6 +283,7 @@ namespace SalesPipeline.Repository
             command.Parameters.AddWithValue("@EnrollmentMethodType", project.EnrollmentMethodType);
             command.Parameters.AddWithValue("@EnrollmentMethodId", project.EnrollmentMethodId);
             command.Parameters.AddWithValue("@FirstName", project.FirstName);
+            command.Parameters.AddWithValue("@SalesExecId", project.SalesExecId);
             
             return command;
         }

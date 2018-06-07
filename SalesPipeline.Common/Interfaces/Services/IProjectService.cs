@@ -8,7 +8,7 @@ namespace SalesPipeline.Common.Interfaces.Services
 
     public interface IProjectService
     {
-        IList<Project> GetProjectsWithProductsForOneExec();
+        IList<Project> GetProjectsWithProductsForOneExec(int salesExecId);
 
         IList<Project> GetAllExecProjectsWithProducts();
 
