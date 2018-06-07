@@ -16,11 +16,11 @@ namespace SalesPipeline.API.Modules
     public class ProjectModule : BaseModule
     {
 
-        public ProjectModule(IProjectService projectService) : base("salesexec/")
+        public ProjectModule(IProjectService projectService) : base("projects")
         {
             this._projectService = projectService;
             this.Get(
-                "/{salesexecid}/projects",
+                "/{salesexecid}",
                 parameters =>
                 {
                     try
