@@ -15,7 +15,7 @@ namespace SalesPipeline.API.Modules
             this._salesExecService = salesExecService;
 
             this.Get(
-                "/salesexec",
+                "/salesexecs",
                 parameters =>
                 {
                     try

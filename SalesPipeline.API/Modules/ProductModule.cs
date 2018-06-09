@@ -15,7 +15,7 @@ namespace SalesPipeline.API.Modules
             this._productService = productService;
 
             this.Get(
-                "/product",
+                "/products",
                 parameters =>
                 {
                     try

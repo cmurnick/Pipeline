@@ -15,7 +15,7 @@ namespace SalesPipeline.API.Modules
             this._enrollmentSystemService = enrollmentSystemService;
 
             this.Get(
-                "/enrollmentsystem",
+                "/enrollmentsystems",
                 parameters =>
                 {
                     try

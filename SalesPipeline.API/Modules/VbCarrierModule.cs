@@ -15,7 +15,7 @@ namespace SalesPipeline.API.Modules
             this._vbCarrierService = vbCarrierService;
 
             this.Get(
-                "/vbcarrier",
+                "/vbcarriers",
                 parameters =>
                 {
                     try

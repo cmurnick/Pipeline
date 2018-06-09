@@ -15,7 +15,7 @@ namespace SalesPipeline.API.Modules
             this._classificationService = classificationService;
 
             this.Get(
-                "/classification",
+                "/classifications",
                 parameters =>
                 {
                     try
