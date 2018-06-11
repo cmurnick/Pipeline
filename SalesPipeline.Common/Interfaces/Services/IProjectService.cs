@@ -4,13 +4,16 @@ using System.Text;
 
 namespace SalesPipeline.Common.Interfaces.Services
 {
+
     using Models;
+  
+
 
     public interface IProjectService
     {
-        IList<Project> GetProjectsWithProductsForOneExec(int salesExecId);
+        IList<Models.Project> GetProjectsWithProductsForOneExec(int salesExecId);
 
-        IList<Project> GetAllExecProjectsWithProducts();
+        IList<Models.Project> GetAllExecProjectsWithProducts();
 
         Project Save(Project project);
 

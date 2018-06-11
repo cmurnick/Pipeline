@@ -9,6 +9,8 @@ namespace SalesPipeline.Repository
     using System.Linq;
     using Common.Interfaces;
     using Common.Models;
+  
+
 
     public class ProjectRepository : IProjectRepository
     {
@@ -16,7 +18,7 @@ namespace SalesPipeline.Repository
 
       
 
-        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
+        public IList<Common.Models.Project> GetProjectsWithProductsForOneExec(int salesExecId)
         {
             var sql = @"Select  
                             p.ProjectId, 
@@ -52,7 +54,7 @@ namespace SalesPipeline.Repository
 
                             ORDER By p.ClassificationId";
 
-            var projects = new List<Project>();
+            var projects = new List<Common.Models.Project>();
 
             using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
             {
@@ -89,7 +91,7 @@ namespace SalesPipeline.Repository
             return projects;
         }
 
-        public IList<Project> GetAllExecProjectsWithProducts()
+        public IList<Common.Models.Project> GetAllExecProjectsWithProducts()
         {
             var sql = @"Select  
                             p.ProjectId, 
@@ -123,7 +125,7 @@ namespace SalesPipeline.Repository
                             WHERE p.ClassificationId = 1 or p.ClassificationId = 2 or p.ClassificationId = 3
                             ORDER By p.New, p.ClassificationId";
 
-            var projects = new List<Project>();
+            var projects = new List<Common.Models.Project>();
             using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
             {
                 using (var command = new SqlCommand(sql, connection))
@@ -191,20 +193,19 @@ namespace SalesPipeline.Repository
 
         public Project Update(Project project)
         {
-            var sql = "@ UPDATE Project SET" +
-                      "ProjectId = @ProjectId" +
-                      "CompanyName = @CompanyName" +
-                      "NumberEligible = @NumberEligible" +
-                      "NumberInterview = @NumberInterview" +
-                      "ClassificationId = @ClassificationId" +
-                      "SalesExecId = @SalesExecId" +
-                      "New = @New" +
-                      "EnrollmentSystemId = @EnrollmentSystemId" +
-                      "VbCarrierId = @VbCarrierId" +
-                      "StartDate = @StartDate" +
-                      "EndDate = @EndDate" +
-                      "EnrollmentMethodId = @EnrollmentMethodId" +
-                      "WHERE ProjectId = @ProjectId";
+            var sql = @"UPDATE Project SET
+                      CompanyName = @CompanyName,
+                      NumberEligible = @NumberEligible,
+                      NumberInterview = @NumberInterview,
+                      ClassificationId = @ClassificationId,
+                      SalesExecId = @SalesExecId,
+                      New = @New,
+                      EnrollmentSystemId = @EnrollmentSystemId,
+                      VbCarrierId = @VbCarrierId,
+                      StartDate = @StartDate,
+                     EndDate = @EndDate,
+                     EnrollmentMethodId = @EnrollmentMethodId
+                     WHERE ProjectId = @ProjectId";
 
             using (var connection =
                 new SqlConnection(
@@ -232,9 +233,9 @@ namespace SalesPipeline.Repository
 
         #region Private Methods
 
-        private Project GetProjects(SqlDataReader dataReader)
+        private Common.Models.Project GetProjects(SqlDataReader dataReader)
         {
-            return new Project()
+            return new Common.Models.Project()
             {
 
                 ProjectId = (int)dataReader["ProjectId"],
@@ -284,11 +285,33 @@ namespace SalesPipeline.Repository
             command.Parameters.AddWithValue("@EnrollmentMethodId", project.EnrollmentMethodId);
             command.Parameters.AddWithValue("@FirstName", project.FirstName);
             command.Parameters.AddWithValue("@SalesExecId", project.SalesExecId);
-            
+
             return command;
         }
 
+        ///// <summary>
+        ///// Converts a Customer into SQL Parameters 
+        ///// </summary>
+        ///// <param name="command">An instance of <see cref="SqlCommand"/></param>
+        ///// <param name="customer">An instance of <see cref="Customer"/></param>
+        ///// <returns>An instance of <see cref="SqlCommand"/> with parameters added</returns>
+        //private SqlCommand GetDTOParameters(SqlCommand command, Project project)
+        //{
+        //    command.Parameters.AddWithValue("@ProjectId", project.ProjectId);
+        //    command.Parameters.AddWithValue("@CompanyName", project.CompanyName);
+        //    command.Parameters.AddWithValue("@NumberEligible", project.NumberEligible);
+        //    command.Parameters.AddWithValue("@NumberInterview", project.NumberInterview);
+        //    command.Parameters.AddWithValue("@ClassificationId", project.ClassificationId);
+        //    command.Parameters.AddWithValue("@New", project.New);
+        //    command.Parameters.AddWithValue("@EnrollmentSystemId", project.EnrollmentSystemId);
+        //    command.Parameters.AddWithValue("@VbCarrierId", project.VbCarrierId);
+        //    command.Parameters.AddWithValue("@StartDate", project.StartDate);
+        //    command.Parameters.AddWithValue("@EndDate", project.EndDate);
+        //    command.Parameters.AddWithValue("@EnrollmentMethodId", project.EnrollmentMethodId);
+        //    command.Parameters.AddWithValue("@SalesExecId", project.SalesExecId);
 
+        //    return command;
+        //}
         #endregion
     }
 }

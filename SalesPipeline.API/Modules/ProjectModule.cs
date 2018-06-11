@@ -11,7 +11,9 @@ namespace SalesPipeline.API.Modules
     using Nancy.ModelBinding;
     using System.Linq;
     using System;
-    using Newtonsoft.Json.Serialization;
+   using Newtonsoft.Json.Serialization;
+
+
 
     public class ProjectModule : BaseModule
     {
@@ -37,7 +39,7 @@ namespace SalesPipeline.API.Modules
                 });
 
             this.Get(
-                "/",
+                "/leadership",
                 parameters =>
                 {
                     try

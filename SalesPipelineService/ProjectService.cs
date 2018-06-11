@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SalesPipeline.Common.Interfaces;
 
 namespace SalesPipeline.Service
 {
+    
     using SalesPipeline.Common.Interfaces;
     using SalesPipeline.Common.Models;
   
+
 
     public class ProjectService : IProjectService
     {
@@ -27,12 +30,12 @@ namespace SalesPipeline.Service
 
         #region Public  Methods
 
-        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
+        public IList<Common.Models.Project> GetProjectsWithProductsForOneExec(int salesExecId)
         {
             return this._projectRepository.GetProjectsWithProductsForOneExec(salesExecId);
         }
 
-        public IList<Project> GetAllExecProjectsWithProducts()
+        public IList<Common.Models.Project> GetAllExecProjectsWithProducts()
         {
             return this._projectRepository.GetAllExecProjectsWithProducts();
         }

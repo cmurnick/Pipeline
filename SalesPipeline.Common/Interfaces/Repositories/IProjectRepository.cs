@@ -4,18 +4,20 @@ using System.Text;
 
 namespace SalesPipeline.Common.Interfaces
 {
+    
     using Models;
+    
 
- 
+
     public interface IProjectRepository
     {
-        IList<Project> GetAllExecProjectsWithProducts();
+        IList<Models.Project> GetAllExecProjectsWithProducts();
 
         Project Insert(Project project);
 
         Project Update(Project project);
 
-        IList<Project> GetProjectsWithProductsForOneExec(int salesExecId);
+        IList<Models.Project> GetProjectsWithProductsForOneExec(int salesExecId);
     }
     
 }
