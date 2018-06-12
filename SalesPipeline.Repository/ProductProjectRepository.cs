@@ -13,9 +13,8 @@ namespace SalesPipeline.Repository
     {
         public ProductProject Insert(ProductProject productProject)
         {
-            var sql = @"INSERT INTO ProductProject (ProjectId, ProductId)
-                        SELECT @ProjectId FROM Project 
-                        SELECT @ProductId From Product";
+            var sql = @"Insert Into ProductProject (ProjectId, ProductId)
+	                    Values (@ProjectId, @ProductId)";
 
             using (var connection =
                 new SqlConnection(
@@ -79,7 +78,6 @@ namespace SalesPipeline.Repository
             {
                 ProjectId = (int) dataReader["ProjectId"],
                 ProductId = (int) dataReader["ProductId"],
-                ProductProjectId = (int) dataReader["ProductProjectId"]
             };
         }
 

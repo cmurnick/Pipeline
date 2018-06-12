@@ -26,6 +26,8 @@ namespace SalesPipeline.API.Modules
 
                         var serviceReturn = new ServiceReturn<ProductProject>();
 
+                        serviceReturn.Data = this._productProjectService.Save(productProject);
+
                         serviceReturn.Success = true;
 
                         return this.GetJsonResponse(serviceReturn);
