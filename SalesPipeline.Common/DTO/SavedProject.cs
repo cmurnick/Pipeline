@@ -6,7 +6,7 @@ namespace SalesPipeline.Common.DTO
 {
     using Models;
 
-    public class Project
+    public class SavedProject
     {
         #region Public Properties
 
