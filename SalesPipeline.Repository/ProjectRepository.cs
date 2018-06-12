@@ -163,10 +163,10 @@ namespace SalesPipeline.Repository
             var sql = "INSERT INTO Project (CompanyName, NumberEligible, " +
                       "NumberInterview, ClassificationId, SalesExecId, " +
                       "New, EnrollmentSystemId, VbCarrierId, StartDate, EndDate, EnrollmentMethodId)" +
-                       "VALUES (@CompanyName, @NumberEligible, " +
+                      "VALUES (@CompanyName, @NumberEligible, " +
                       "@NumberInterview, @ClassificationId, @SalesExecId, " +
-                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)" +
-                      "Set @ProjectId = SCOPE_IDENTITY()";
+                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)";
+                    
 
             using (var connection =
                 new SqlConnection(
