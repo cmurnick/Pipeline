@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="DTO\Project.cs" />
+    <Compile Remove="DTO\SavedProject.cs" />
     <Compile Remove="Interfaces\Services\IAllSeedDataService.cs" />
     <Compile Remove="Models\AllSeedDataModel.cs" />
   </ItemGroup>

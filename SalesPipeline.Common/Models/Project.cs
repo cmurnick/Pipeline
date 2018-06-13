@@ -33,17 +33,17 @@ namespace SalesPipeline.Common.Models
         public DateTime StartDate { get; set; }
 
 
-        //public string StartDateDisplay
-        //{
-        //    get { return this.StartDate.ToShortDateString(); }
-        //}
+        public string StartDateDisplay
+        {
+            get { return this.StartDate.ToShortDateString(); }
+        }
 
         public DateTime EndDate { get; set; }
 
-        //public string EndDateDisplay
-        //{
-        //    get { return this.EndDate.ToShortDateString(); }
-        //}
+        public string EndDateDisplay
+        {
+            get { return this.EndDate.ToShortDateString(); }
+        }
 
         public string EnrollmentMethodType { get; set; }
         public int EnrollmentMethodId { get; set; }
