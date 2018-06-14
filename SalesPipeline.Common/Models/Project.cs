@@ -51,6 +51,30 @@ namespace SalesPipeline.Common.Models
 
         public List<Product> Products { get; set; }
 
+        public string ProductNames
+        {
+            get { return this.getProductNames(this.Products); }
+        }
+
+        #endregion
+
+        #region Private
+
+        private string getProductNames(List<Product> products)
+        {
+            var sb = new StringBuilder();
+
+            var comma = string.Empty;
+            foreach (var product in products)
+            {
+                sb.AppendFormat("{0}{1}", comma, product.ProductName.Trim());
+                comma = ", ";
+            }
+
+            return sb.ToString();
+        }
+
         #endregion
     }
+
 }

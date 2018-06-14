@@ -11,5 +11,7 @@ namespace SalesPipeline.Common.Interfaces.Services
         IList<Product> Get();
 
         IList<Product> GetForProject(int projectId);
+
+        IList<Product> GetAllForProject(int projectId);
     }
 }

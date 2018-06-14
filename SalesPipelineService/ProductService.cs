@@ -4,6 +4,7 @@ using System.Text;
 
 namespace SalesPipeline.Service
 {
+    using System.Linq;
     using Common.Interfaces.Repositories;
     using Common.Interfaces.Services;
     using Common.Models;
@@ -29,6 +30,20 @@ namespace SalesPipeline.Service
         public IList<Product> Get()
         {
             return this._productRepository.Get();
+        }
+
+        public IList<Product> GetAllForProject(int projectId)
+        {
+            var products = this.Get();
+
+            var projectProducts = GetForProject(projectId);
+            foreach (var projectProduct in projectProducts)
+            {
+                var product = products.FirstOrDefault(p => p.ProductId == projectProduct.ProductId);
+                product.Selected = true;
+            }
+
+            return products;
         }
 
         public IList<Product> GetForProject(int projectId)
