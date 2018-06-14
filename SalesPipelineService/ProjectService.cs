@@ -6,7 +6,7 @@ using SalesPipeline.Common.Interfaces;
 
 namespace SalesPipeline.Service
 {
-    
+    using System.Linq;
     using SalesPipeline.Common.Interfaces;
     using SalesPipeline.Common.Models;
   
@@ -16,9 +16,10 @@ namespace SalesPipeline.Service
     {
         #region Constructors
 
-        public ProjectService(IProjectRepository projectRepository)
+        public ProjectService(IProjectRepository projectRepository, IProductService productService)
         {
             this._projectRepository = projectRepository;
+            this._productService = productService;
         }
         #endregion
 
@@ -26,18 +27,33 @@ namespace SalesPipeline.Service
 
         private IProjectRepository _projectRepository { get; }
 
+        private IProductService _productService { get; }
+
         #endregion
 
         #region Public  Methods
 
-        public IList<Common.Models.Project> GetProjectsWithProductsForOneExec(int salesExecId)
+        public IList<Project> GetProjectsWithProductsForOneExec(int salesExecId)
         {
-            return this._projectRepository.GetProjectsWithProductsForOneExec(salesExecId);
+            
+            var projects = this._projectRepository.GetProjectsWithProductsForOneExec(salesExecId);
+
+            foreach (var project in projects)
+            {
+                project.Products = this._productService.GetForProject(project.ProjectId).ToList();
+            }
+            return projects;
         }
 
-        public IList<Common.Models.Project> GetAllExecProjectsWithProducts()
+        public IList<Project> GetAllExecProjectsWithProducts()
         {
-            return this._projectRepository.GetAllExecProjectsWithProducts();
+            var projects = this._projectRepository.GetAllExecProjectsWithProducts();
+
+            foreach(var project in projects)
+            {
+                project.Products = this._productService.GetForProject(project.ProjectId).ToList();
+            }
+            return projects;
         }
 
         public Project Save(Project project)

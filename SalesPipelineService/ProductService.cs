@@ -31,6 +31,11 @@ namespace SalesPipeline.Service
             return this._productRepository.Get();
         }
 
+        public IList<Product> GetForProject(int projectId)
+        {
+            return this._productRepository.GetForProject(projectId);
+        }
+
         #endregion
     }
 }

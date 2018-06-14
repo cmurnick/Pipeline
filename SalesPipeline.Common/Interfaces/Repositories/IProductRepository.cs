@@ -10,5 +10,6 @@ namespace SalesPipeline.Common.Interfaces.Repositories
     {
         IList<Product> Get();
 
+        IList<Product> GetForProject(int projectId);
     }
 }

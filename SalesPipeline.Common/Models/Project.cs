@@ -10,7 +10,7 @@ namespace SalesPipeline.Common.Models
 
         public Project()
         {
-            this.Product = new List<Product>();
+            this.Products = new List<Product>();
         }
 
         #endregion
@@ -49,7 +49,7 @@ namespace SalesPipeline.Common.Models
         public int EnrollmentMethodId { get; set; }
 
 
-        public List<Product> Product { get; set; }
+        public List<Product> Products { get; set; }
 
         #endregion
     }

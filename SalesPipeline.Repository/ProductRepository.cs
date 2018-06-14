@@ -32,7 +32,10 @@ namespace SalesPipeline.Repository
 
             var products = new List<Product>();
 
-            using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
+            using (var connection =
+                new SqlConnection(
+                    "Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77")
+            )
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -52,6 +55,40 @@ namespace SalesPipeline.Repository
             return products;
         }
 
+        public IList<Product> GetForProject(int projectId)
+        {
+            var sql = @"Select * from Product p
+                        Join ProductProject pp on p.ProductId = pp.ProductId
+
+                        Where pp.ProjectId = @ProjectId";
+
+            var products = new List<Product>();
+            using (var connection =
+                new SqlConnection(
+                    "Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77")
+            )
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.AddWithValue("@projectId", projectId);
+                    connection.Open();
+
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            var product = GetProducts(dataReader);
+                            products.Add(product);
+                        }
+                    }
+                }
+            }
+
+            return products;
+        }
+
         #endregion
 
         #region Private Methods
@@ -60,11 +97,18 @@ namespace SalesPipeline.Repository
         {
             return new Product()
             {
-                ProductId = (int)dataReader["ProductId"],
-                ProductName = (string)dataReader["ProductName"]
+                ProductId = (int) dataReader["ProductId"],
+                ProductName = (string) dataReader["ProductName"]
             };
         }
 
+        //private SqlCommand GetParameters(SqlCommand command, Product product)
+        //{
+        //    command.Parameters.AddWithValue("@ProjectId", product.ProjectId);
+
+        //    return command;
+          
+        //}
         #endregion
     }
 }

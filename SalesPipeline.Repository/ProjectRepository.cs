@@ -37,9 +37,8 @@ namespace SalesPipeline.Repository
                             c.ClassificationName,
                             es.SystemName,
                             v.VbCarrierName,
-                            em.EnrollmentMethodType,
-                            n.ProductId,
-                            n.ProductName
+                            em.EnrollmentMethodType
+                           
                                 
                             FROM Project p
 								join Classification c on c.ClassificationId = p. ClassificationId
@@ -47,8 +46,6 @@ namespace SalesPipeline.Repository
 								join EnrollmentSystem es on es.EnrollmentSystemId = p.EnrollmentSystemId
 								join EnrollmentMethod em on em.EnrollmentMethodId = p.EnrollmentMethodId
 								join VbCarrier v on v.VbCarrierId = p.VbCarrierId
-                                join ProductProject j on j.ProjectId = p.ProjectId
-                                join Product n on n.ProductId = j.ProductId
 
                             WHERE p.SalesExecId = @SalesExecId
 
@@ -70,21 +67,9 @@ namespace SalesPipeline.Repository
                     {
                             while (dataReader.Read())
                             {
-                                var project = GetProjects(dataReader);
-                                var existingProject = projects.FirstOrDefault(x => x.ProjectId == project.ProjectId);
-                                if (existingProject == null)
-                                {
-                                    projects.Add(project);
-                                    existingProject = project;
-                                }
-
-                                existingProject.Product.Add(new Product
-                                {
-                                    ProductId = (int) dataReader["productId"],
-                                    ProductName = (string) dataReader["ProductName"]
-                                });
-
-                            }
+                                var project = GetProject(dataReader);
+                                projects.Add(project);
+                        }
                         }
                     }
                 }
@@ -110,9 +95,8 @@ namespace SalesPipeline.Repository
                             c.ClassificationName,
                             es.SystemName,
                             v.VbCarrierName,
-                            em.EnrollmentMethodType,
-                            n.ProductId,
-                            n.ProductName
+                            em.EnrollmentMethodType
+                           
                                 
                             FROM Project p
 								join Classification c on c.ClassificationId = p. ClassificationId
@@ -120,12 +104,11 @@ namespace SalesPipeline.Repository
 								join EnrollmentSystem es on es.EnrollmentSystemId = p.EnrollmentSystemId
 								join EnrollmentMethod em on em.EnrollmentMethodId = p.EnrollmentMethodId
 								join VbCarrier v on v.VbCarrierId = p.VbCarrierId
-                                join ProductProject j on j.ProjectId = p.ProjectId
-                                join Product n on n.ProductId = j.ProductId
+                                
                             WHERE p.ClassificationId = 1 or p.ClassificationId = 2 or p.ClassificationId = 3
                             ORDER By p.New, p.ClassificationId";
 
-            var projects = new List<Common.Models.Project>();
+            var projects = new List<Project>();
             using (var connection = new SqlConnection("Data Source=.;Initial Catalog=Capstone;Integrated Security=False;MultipleActiveResultSets=True;User Id=capstoneUser;Password=hadleigh77"))
             {
                 using (var command = new SqlCommand(sql, connection))
@@ -137,21 +120,10 @@ namespace SalesPipeline.Repository
                     {
                         while (dataReader.Read())
                         {
-                            var project = GetProjects(dataReader);
-                            var existingProject = projects.FirstOrDefault(x => x.ProjectId == project.ProjectId);
-                            if (existingProject == null)
-                            {
-                                projects.Add(project);
-                                existingProject = project;
-                            }
-
-                            existingProject.Product.Add(new Product
-                            {
-                                ProductId = (int)dataReader["productId"],
-                                ProductName = (string)dataReader["ProductName"]
-                            });
-
+                            var project = GetProject(dataReader);
+                            projects.Add(project);
                         }
+
                     }
                 }
             }
@@ -233,7 +205,7 @@ namespace SalesPipeline.Repository
 
         #region Private Methods
 
-        private Common.Models.Project GetProjects(SqlDataReader dataReader)
+        private Common.Models.Project GetProject(SqlDataReader dataReader)
         {
             return new Common.Models.Project()
             {
@@ -255,6 +227,7 @@ namespace SalesPipeline.Repository
                 EndDate = (DateTime)dataReader["EndDate"],
                 EnrollmentMethodType = (string)dataReader["EnrollmentMethodType"],
                 EnrollmentMethodId = (int)dataReader["EnrollmentMethodId"]
+              
 
 
             };

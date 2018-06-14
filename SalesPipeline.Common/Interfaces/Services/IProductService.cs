@@ -9,5 +9,7 @@ namespace SalesPipeline.Common.Interfaces.Services
     public interface IProductService
     {
         IList<Product> Get();
+
+        IList<Product> GetForProject(int projectId);
     }
 }
