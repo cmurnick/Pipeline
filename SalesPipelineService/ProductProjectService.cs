@@ -29,9 +29,30 @@ namespace SalesPipeline.Service
         #endregion
 
 
-        public ProductProject Save(ProductProject productProject)
+        public List<ProductProject> Save(List<Product> products, int projectId)
         {
-            return this._productProjectRepository.Insert(productProject);
+           
+            this.Delete(projectId);
+            var productProjects = new List<ProductProject>();
+            foreach (var product in products)
+            {
+                if (product.Selected)
+                {
+                  
+                    var productProject = new ProductProject()
+                    {
+                        ProjectId = projectId,
+                        ProductId = product.ProductId
+                    };
+
+                    this._productProjectRepository.Insert(productProject);
+                  
+                    productProjects.Add(productProject);
+                }
+            }
+
+
+            return productProjects;
 
         }
 

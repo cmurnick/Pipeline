@@ -7,14 +7,17 @@ namespace SalesPipeline.API.Modules
 {
     using System.Net;
     using Common.Interfaces.Services;
+    using Common.Models;
     using Nancy;
+    using Nancy.ModelBinding;
     using HttpStatusCode = Nancy.HttpStatusCode;
 
     public class ProductModule : BaseModule
     {
-        public ProductModule(IProductService productService) : base("lookup")
+        public ProductModule(IProductService productService, IProductProjectService productProjectService) : base("lookup")
         {
             this._productService = productService;
+            this._productProjectService = productProjectService;
 
             this.Get(
                 "/products",
@@ -49,6 +52,31 @@ namespace SalesPipeline.API.Modules
                         return this.Negotiate.WithStatusCode(HttpStatusCode.InternalServerError);
                     }
                 });
+
+            this.Post(
+                "/project/{projectid}/products",
+                parameters =>
+                {
+                    try
+                    {
+                        var projectId = parameters.projectid;
+
+                        var products = this.Bind<List<Product>>();
+                        var serviceReturn = new ServiceReturn<List<ProductProject>>();
+
+                        serviceReturn.Data = this._productProjectService.Save(products, projectId);
+
+                        serviceReturn.Success = true;
+
+                        return this.GetJsonResponse(serviceReturn);
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                });
         }
 
 
@@ -56,7 +84,8 @@ namespace SalesPipeline.API.Modules
         #region PrivateProperties
 
         private IProductService _productService { get; }
-
+        
+        private IProductProjectService _productProjectService { get; }
         #endregion
     }
 }

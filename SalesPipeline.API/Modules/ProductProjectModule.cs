@@ -38,26 +38,7 @@ namespace SalesPipeline.API.Modules
                     }
                 });
 
-            this.Delete(
-                "/{projectid}",
-                parameters =>
-                {
-                    try
-                    {
-                        int projectId = parameters.projectId;
-                        var serviceReturn = new ServiceReturn<ProductProject>();
-                        serviceReturn.Success = this._productProjectService.Delete(projectId);
-                        serviceReturn.ItemId = projectId;
-
-                        return this.GetJsonResponse(serviceReturn);
-
-                    }
-                    catch (Exception e)
-                    {
-                        return this.Negotiate.WithStatusCode(HttpStatusCode.InternalServerError);
-                    }
-                });
-        }
+            
 
         #region PrivateProperties
 

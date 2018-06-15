@@ -8,7 +8,7 @@ namespace SalesPipeline.Common.Interfaces.Services
 
     public interface IProductProjectService
     {
-        ProductProject Save(ProductProject ProductProject);
+        List<ProductProject> Save(List<Product> products, int projectId);
 
         bool Delete(int projectId);
     }
