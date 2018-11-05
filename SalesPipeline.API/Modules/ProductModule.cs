@@ -54,7 +54,7 @@ namespace SalesPipeline.API.Modules
                 });
 
             this.Post(
-                "/project/{projectid}/products",
+                "/projects/{projectid}/products",
                 parameters =>
                 {
                     try

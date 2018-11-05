@@ -137,7 +137,8 @@ namespace SalesPipeline.Repository
                       "New, EnrollmentSystemId, VbCarrierId, StartDate, EndDate, EnrollmentMethodId)" +
                       "VALUES (@CompanyName, @NumberEligible, " +
                       "@NumberInterview, @ClassificationId, @SalesExecId, " +
-                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)";
+                      "@New, @EnrollmentSystemId, @VbCarrierId, @StartDate, @EndDate, @EnrollmentMethodId)" +
+                      "SET @ProjectId = SCOPE_IDENTITY()";
                     
 
             using (var connection =
